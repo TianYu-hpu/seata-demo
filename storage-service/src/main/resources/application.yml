@@ -4,10 +4,10 @@ spring:
   application:
     name: storage-service
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql:///seata-demo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///seata-demo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: root
-    password: Tian@0628
+    password: root
   cloud:
     nacos:
       server-addr: localhost:8848
@@ -51,4 +51,4 @@ seata:
       username: nacos
       password: nacos
       group: DEFAULT_GROUP
-      data-id: seataServer.properties
+      data-id: client.properties
