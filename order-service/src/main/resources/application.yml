@@ -52,4 +52,9 @@ seata:
       password: nacos
       group: DEFAULT_GROUP
       data-id: client.properties
-
+feign:
+  client:
+    config:
+      default:  # 全局默认配置
+        connectTimeout: 30000  # 连接超时时间（单位：毫秒）
+        readTimeout: 30000     # 读取响应超时时间
