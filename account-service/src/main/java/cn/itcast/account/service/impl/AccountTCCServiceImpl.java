@@ -25,6 +25,11 @@ public class AccountTCCServiceImpl implements AccountTCCService {
     public void deduct(String userId, int money) {
         // 0.获取事务id
         String xid = RootContext.getXID();
+        //事务悬挂处理,如果不为null,说明已经执行过cancel逻辑了
+        AccountFreeze oldFreeze = freezeMapper.selectById(xid);
+        if(oldFreeze != null) {
+            return;
+        }
         // 1.扣减可用余额
         accountMapper.deduct(userId, money);
         // 2.记录冻结金额，事务状态
@@ -50,6 +55,21 @@ public class AccountTCCServiceImpl implements AccountTCCService {
         // 0.查询冻结记录
         String xid = ctx.getXid();
         AccountFreeze freeze = freezeMapper.selectById(xid);
+        String userId = ctx.getActionContext().get("userId").toString();
+        if(freeze == null) {
+            //空回滚
+            freeze = new AccountFreeze();
+            freeze.setUserId(userId);
+            freeze.setFreezeMoney(0);
+            freeze.setState(AccountFreeze.State.CANCEL);
+            freeze.setXid(xid);
+            freezeMapper.insert(freeze);
+        }
+
+        //幂等判断
+        if(freeze.getState() == AccountFreeze.State.CANCEL) {
+            return true;
+        }
 
         // 1.恢复可用余额
         accountMapper.refund(freeze.getUserId(), freeze.getFreezeMoney());

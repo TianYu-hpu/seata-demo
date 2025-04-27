@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
     @Autowired
-    private AccountService accountService;
+    private AccountTCCService accountService;
 
     @PutMapping("/{userId}/{money}")
     public ResponseEntity<Void> deduct(@PathVariable("userId") String userId, @PathVariable("money") Integer money){

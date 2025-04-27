@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql:///seata-demo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: root
-    password: root
+    password: Tian@0628
   cloud:
     nacos:
       server-addr: localhost:8848
@@ -43,7 +43,7 @@ seata:
   service:
     vgroup-mapping: # 事务组与cluster的映射关系
       seata-demo: default
-  data-source-proxy-mode: XA
+  data-source-proxy-mode: AT
   config:
     type: nacos
     nacos:
