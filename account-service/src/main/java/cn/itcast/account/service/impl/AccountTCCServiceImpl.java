@@ -7,6 +7,9 @@ import cn.itcast.account.service.AccountTCCService;
 import io.seata.core.context.RootContext;
 import io.seata.rm.tcc.api.BusinessActionContext;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.Tag;
+import org.apache.skywalking.apm.toolkit.trace.Tags;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,10 @@ public class AccountTCCServiceImpl implements AccountTCCService {
 
     @Override
     @Transactional
+    @Trace
+    @Tags({@Tag(key = "param", value = "arg[0]"),
+            @Tag(key = "param", value = "arg[1]"),
+            @Tag(key = "deduct", value = "returnedObj")})
     public void deduct(String userId, int money) {
         // 0.获取事务id
         String xid = RootContext.getXID();
