@@ -52,3 +52,4 @@ seata:
       password: nacos
       group: DEFAULT_GROUP
       data-id: client.properties
+

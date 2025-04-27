@@ -3,6 +3,9 @@ package cn.itcast.storage.service.impl;
 import cn.itcast.storage.mapper.StorageMapper;
 import cn.itcast.storage.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.Tag;
+import org.apache.skywalking.apm.toolkit.trace.Tags;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,10 @@ public class StorageServiceImpl implements StorageService {
 
     @Transactional
     @Override
+    @Trace
+    @Tags({@Tag(key = "param", value = "arg[0]"),
+            @Tag(key = "param", value = "arg[1]"),
+            @Tag(key = "deduct", value = "returnedObj")})
     public void deduct(String commodityCode, int count) {
         log.info("开始扣减库存");
         try {

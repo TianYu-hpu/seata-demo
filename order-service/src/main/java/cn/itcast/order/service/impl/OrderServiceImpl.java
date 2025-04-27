@@ -8,6 +8,9 @@ import cn.itcast.order.service.OrderService;
 import feign.FeignException;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.Tag;
+import org.apache.skywalking.apm.toolkit.trace.Tags;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @GlobalTransactional
+    @Trace
+    @Tags({@Tag(key = "param", value = "arg[0]"),
+            @Tag(key = "create", value = "returnedObj")})
     public Long create(Order order) {
         // 创建订单
         orderMapper.insert(order);
